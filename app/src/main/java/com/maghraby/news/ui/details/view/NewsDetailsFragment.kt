@@ -1,18 +1,16 @@
-package com.maghraby.news.ui.main.view
+package com.maghraby.news.ui.details.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
-import com.maghraby.news.R
 import com.maghraby.news.data.model.News
 import com.maghraby.news.databinding.FragmentNewsDetailsBinding
-import com.maghraby.news.ui.main.viewmodel.MainViewModel
+import com.maghraby.news.utils.clickableLink
+import com.maghraby.news.utils.setDate
 import com.maghraby.news.utils.setImage
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.maghraby.news.utils.setTime
 
 class NewsDetailsFragment : Fragment() {
 
@@ -42,6 +40,15 @@ class NewsDetailsFragment : Fragment() {
             binding.mainIV.setImage(newsObject?.image)
             binding.titleTV.text = newsObject?.title
             binding.descriptionTV.text = newsObject?.description
+            if (newsObject?.url != null) {
+                binding.linkTV.clickableLink(newsObject!!.url)
+            }
+
+            newsObject?.published_at?.let {
+                binding.pubDateTV.setDate(it)
+                binding.pubTimeTV.setTime(it)
+            }
+            binding.authorTV.text = newsObject?.author
         }
 
     }

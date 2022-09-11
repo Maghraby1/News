@@ -11,7 +11,7 @@ import com.maghraby.news.utils.setImage
 
 class NewsAdapter(
     private val news: ArrayList<News>,
-    private val clickListener : (Int) -> Unit
+    private val clickListener : (News) -> Unit
 ) : RecyclerView.Adapter<NewsAdapter.DataViewHolder>() {
 
     inner class DataViewHolder(val binding: NewsLayoutBinding) :
@@ -38,9 +38,8 @@ class NewsAdapter(
         holder.binding.textViewUserEmail.text = news[holder.adapterPosition].description
         holder.binding.imageViewAvatar.setImage((news[holder.adapterPosition].image))
         holder.binding.root.setOnClickListener {
-            clickListener(holder.adapterPosition)
+            clickListener(news[holder.adapterPosition])
         }
-
     }
 
     fun addData(list: List<News>) {

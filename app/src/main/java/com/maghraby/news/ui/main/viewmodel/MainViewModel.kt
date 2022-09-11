@@ -1,6 +1,5 @@
 package com.maghraby.news.ui.main.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +17,7 @@ class MainViewModel(
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
+    var offset = 0
     private val _news = MutableLiveData<Resource<List<News>>>()
     val news: LiveData<Resource<List<News>>>
         get() = _news
@@ -26,17 +26,19 @@ class MainViewModel(
         fetchNews()
     }
 
-    private fun fetchNews() {
+    fun fetchNews() {
         viewModelScope.launch {
             _news.postValue(Resource.loading(null))
             if (networkHelper.isNetworkConnected()) {
-                mainRepository.getUsers().let {
+                mainRepository.getNews(offset).let {
+                    offset+=25
                     handleNewsResponse(it)
                 }
             } else _news.postValue(Resource.error("No internet connection", null))
         }
     }
-    private fun handleNewsResponse(it : Response<BaseResponse>) {
+
+    private fun handleNewsResponse(it: Response<BaseResponse>) {
         if (it.isSuccessful) {
             _news.postValue(Resource.success(it.body()?.data))
         } else _news.postValue(Resource.error(it.errorBody().toString(), null))

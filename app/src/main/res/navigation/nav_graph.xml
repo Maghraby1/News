@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_news" />
     <fragment
         android:id="@+id/newsDetailsFragment"
-        android:name="com.maghraby.news.ui.main.view.NewsDetailsFragment"
+        android:name="com.maghraby.news.ui.details.view.NewsDetailsFragment"
         android:label="fragment_news_details"
         tools:layout="@layout/fragment_news_details" />
 </navigation>

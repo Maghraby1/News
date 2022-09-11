@@ -6,7 +6,7 @@ import retrofit2.Response
 
 class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
-    override suspend fun getUsers(): Response<BaseResponse> =
-        apiService.getUsers(apiKey = ACCESS_KEY)
+    override suspend fun getNews(offset: Int): Response<BaseResponse> =
+        apiService.getNews(apiKey = ACCESS_KEY, limit = 25,offset = offset)
 
 }

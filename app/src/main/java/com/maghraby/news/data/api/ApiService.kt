@@ -8,7 +8,9 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("news")
-    suspend fun getUsers(
+    suspend fun getNews(
         @Query("access_key") apiKey: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
     ): Response<BaseResponse>
 }
