@@ -1,40 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/container"
-    android:layout_margin="16dp"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageViewAvatar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="80dp"
-        android:padding="4dp"
+        android:id="@+id/newsIV"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:contentDescription="@string/image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewUserName"
-        style="@style/TextAppearance.AppCompat.Large"
+        android:id="@+id/newsTitleTV"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar"
-        app:layout_constraintStart_toStartOf="parent"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@id/moreButton"
+        app:layout_constraintTop_toTopOf="@id/newsIV"
+        app:layout_constraintBottom_toBottomOf="@id/newsIV"
+        app:layout_constraintStart_toEndOf="@id/newsIV"
         tools:text="MindOrks" />
 
+    <ImageView
+        android:id="@+id/moreButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_more"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/newsTitleTV"
+        app:layout_constraintBottom_toBottomOf="@id/newsTitleTV"/>
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewUserEmail"
+        android:id="@+id/newsDetailsTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewUserName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUserName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newsIV"
         tools:text="MindOrks" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

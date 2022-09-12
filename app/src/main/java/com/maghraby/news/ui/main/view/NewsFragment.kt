@@ -56,12 +56,13 @@ class NewsFragment : Fragment() {
         mLayoutManger = LinearLayoutManager(requireActivity())
         mLayoutManger.isSmoothScrollbarEnabled = true
         binding.newsRV.layoutManager = mLayoutManger
-        binding.newsRV.addItemDecoration(
-            DividerItemDecoration(
-                binding.newsRV.context,
-                (binding.newsRV.layoutManager as LinearLayoutManager).orientation
-            )
-        )
+
+//        binding.newsRV.addItemDecoration(
+//            DividerItemDecoration(
+//                binding.newsRV.context,
+//                (binding.newsRV.layoutManager as LinearLayoutManager).orientation
+//            )
+//        )
         binding.newsRV.adapter = adapter
         initRecyclerViewScrollListener()
     }

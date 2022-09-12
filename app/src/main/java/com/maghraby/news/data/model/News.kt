@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class News(
+    var isExpanded : Boolean = false,
     val author: String = "",
     val url: String = "",
     val title: String = "",
