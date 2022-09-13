@@ -6,4 +6,5 @@ import retrofit2.Response
 interface ApiHelper {
 
     suspend fun getNews(offset: Int): Response<BaseResponse>
+    suspend fun getNews(offset: Int, countries : String): Response<BaseResponse>
 }

@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.maghraby.news.data.model.News
+import com.maghraby.news.ui.main.adapter.model.News
 import com.maghraby.news.databinding.FragmentNewsDetailsBinding
 import com.maghraby.news.utils.clickableLink
 import com.maghraby.news.utils.setDate

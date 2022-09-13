@@ -13,4 +13,15 @@ interface ApiService {
         @Query("limit") limit: Int,
         @Query("offset") offset: Int,
     ): Response<BaseResponse>
+
+
+    @GET("news")
+    suspend fun getNews(
+        @Query("access_key") apiKey: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
+        @Query("countries") countries: String,
+    ): Response<BaseResponse>
+
+
 }

@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout-v28/country_item.xml" value="0.15416666666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/activity_news_details.xml" value="0.2566009521484375" />
+        <entry key="app/src/main/res/layout/country_item.xml" value="0.5272898356119792" />
         <entry key="app/src/main/res/layout/fragment_news.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/fragment_news_details.xml" value="0.28072916666666664" />
         <entry key="app/src/main/res/layout/news_layout.xml" value="0.21321818033854167" />

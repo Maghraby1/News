@@ -7,7 +7,7 @@ import android.view.View.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.maghraby.news.data.model.News
+import com.maghraby.news.ui.main.adapter.model.News
 import com.maghraby.news.databinding.NewsLayoutBinding
 import com.maghraby.news.utils.setImage
 
@@ -85,7 +85,10 @@ class NewsAdapter(
         }
     }
 
-    fun addData(list: List<News>) {
+    fun addData(list: List<News>,newsData :Boolean = false) {
+        if(newsData){
+            news.clear()
+        }
         news.addAll(list)
     }
 }

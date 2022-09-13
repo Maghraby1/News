@@ -1,5 +1,7 @@
 package com.maghraby.news.data.model
 
+import com.maghraby.news.ui.main.adapter.model.News
+
 data class BaseResponse(
 //    val status: String,
 //    val totalResults : Int,

@@ -1,30 +1,35 @@
 package com.maghraby.news.ui.main.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
+import android.widget.LinearLayout
+import android.widget.LinearLayout.HORIZONTAL
+import android.widget.LinearLayout.VERTICAL
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.maghraby.news.R
-import com.maghraby.news.data.model.News
+import com.maghraby.news.ui.main.adapter.model.News
 import com.maghraby.news.databinding.FragmentNewsBinding
+import com.maghraby.news.ui.main.adapter.CountryAdapter
 import com.maghraby.news.ui.main.adapter.NewsAdapter
+import com.maghraby.news.ui.main.adapter.model.Country
 import com.maghraby.news.ui.main.viewmodel.MainViewModel
 import com.maghraby.news.utils.Resource
 import com.maghraby.news.utils.Status
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import retrofit2.Response
 
 class NewsFragment : Fragment() {
 
     private lateinit var binding: FragmentNewsBinding
+    private var selectedCountries = arrayListOf<String>()
     private val mainViewModel: MainViewModel by viewModel()
     lateinit var mLayoutManger: LinearLayoutManager
     private val lastVisibleItemPosition: Int
@@ -36,6 +41,15 @@ class NewsFragment : Fragment() {
                 bundleOf("NEWS_POS" to it)
             )
         }
+    }
+    private val countryAdapter: CountryAdapter by lazy {
+        CountryAdapter(arrayListOf(), {
+            selectedCountries.add(it)
+            getNews()
+        }, {
+            selectedCountries.remove(it)
+            getNews()
+        })
     }
 
     override fun onCreateView(
@@ -54,16 +68,12 @@ class NewsFragment : Fragment() {
 
     private fun setUpUI() {
         mLayoutManger = LinearLayoutManager(requireActivity())
+        val xLayoutManger = LinearLayoutManager(requireActivity(), HORIZONTAL, false)
         mLayoutManger.isSmoothScrollbarEnabled = true
         binding.newsRV.layoutManager = mLayoutManger
-
-//        binding.newsRV.addItemDecoration(
-//            DividerItemDecoration(
-//                binding.newsRV.context,
-//                (binding.newsRV.layoutManager as LinearLayoutManager).orientation
-//            )
-//        )
         binding.newsRV.adapter = adapter
+        binding.countriesRV.layoutManager = xLayoutManger
+        binding.countriesRV.adapter = countryAdapter
         initRecyclerViewScrollListener()
     }
 
@@ -79,17 +89,46 @@ class NewsFragment : Fragment() {
                 }
                 Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
-                    it.data?.let { users -> renderList(users) }
+                    it.data?.let { news -> renderList(news) }
                     binding.newsRV.visibility = View.VISIBLE
                 }
             }
         }
+
+        mainViewModel.countries.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) renderCountries(it)
+        }
+    }
+
+    private fun getNews() {
+        if (selectedCountries.isEmpty()) {
+            mainViewModel.fetchNews()
+            return
+        }
+        val countries = StringBuilder()
+        selectedCountries.forEachIndexed { index, it ->
+            countries.append(it)
+            countries.append(',')
+        }
+        countries.removeSurrounding(",")
+        mainViewModel.fetchNewsByCountry(countries.toString())
     }
 
     private fun renderList(news: List<News>) {
-        adapter.addData(news)
+        if(mainViewModel.offset==25){
+            adapter.addData(news,true)
+        }else{
+            adapter.addData(news)
+        }
+
         adapter.notifyDataSetChanged()
     }
+
+    private fun renderCountries(countries: List<Country>) {
+        countryAdapter.addData(countries)
+        countryAdapter.notifyDataSetChanged()
+    }
+
     private fun initRecyclerViewScrollListener() {
         binding.newsRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -99,7 +138,7 @@ class NewsFragment : Fragment() {
                     if (lastVisibleItemPosition == adapter.itemCount - 1
                         && mainViewModel.news.value != Resource.loading(null)
                     ) {
-                            mainViewModel.fetchNews()
+                        getNews()
                     }
             }
         })

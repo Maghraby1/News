@@ -1,4 +1,4 @@
-package com.maghraby.news.data.model
+package com.maghraby.news.ui.main.adapter.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
